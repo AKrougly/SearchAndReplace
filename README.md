@@ -7,6 +7,7 @@ Call parameters:
 
 Parameter -p, you can specify a directory or a file; if a directory is specified, the search runs through all files in the directory and subdirectories.
 Example 1: -p d:\test, example 2: -p d:\test\file.txt.
+If a directory name contains a space and ends with a backslash, the trailing backslash must be changed to a forward slash to avoid escaping the quote.
 
 The -m parameter allows you to specify a list of file extensions when searching directories, separated by semicolons.
 Example: -m *.tst ;*.txt.
@@ -14,3 +15,4 @@ Example: -m *.tst ;*.txt.
 The -s parameter allows you to specify the string to search for and the string to replace with.
 Example 1: old _str new _str - search and replace.
 Example 2: -s search _str - only searches and outputs to the terminal files and lines in which it is found.
+If a parameter contains multiple search and replace pairs, then a sequential search and replace is performed for each pair.

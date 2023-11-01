@@ -38,10 +38,12 @@ public class FileProcessing {
         //fileContent.forEach(l -> System.out.println(l));
         if (params.get("s").size() > 1) {
             newFileContent = fileContent
-                .map(l -> l.contains(params.get("s").get(0))
-                        ? l.replace(params.get("s").get(0), params.get("s").get(1))
-                        : l
-                );
+                .map(l -> {
+                    for (int i = 0; i + 1 < params.get("s").size(); i = i + 2) {
+                        l = l.replace(params.get("s").get(i), params.get("s").get(i + 1));
+                    }
+                    return l;
+                });
             //newFileContent.forEach(l -> System.out.println(l));
             writeFile(path, newFileContent.collect(Collectors.toList()));
         } else {

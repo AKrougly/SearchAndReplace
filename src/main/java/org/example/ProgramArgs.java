@@ -25,25 +25,30 @@ public class ProgramArgs {
     }
     static Map<String, List<String>> parsingArgs(String[] args) throws AnExeption {
         final Map<String, List<String>> params = new HashMap<>();
-        List<String> options = null;
-        for (final String a : args) {
-            if (a.charAt(0) == '-') {
-                if (a.length() < 2) {
-                    params.clear();
-                    throw new AnExeption("Error at argument " + a);
+        String option = "";
+        List<String> arguments = null;
+        for (final String arg : args) {
+            System.out.println(arg);
+
+            if (arg.charAt(0) == '-') {
+                if (arg.length() < 2) {
+                    throw new AnExeption("Error at argument " + arg);
                 }
-                if (params.containsKey(a.substring(1))) {
-                    options = params.get(a.substring(1));
+                option = arg.substring(1);
+                if (params.containsKey(option)) {
+                    arguments = params.get(option);
                 } else {
-                    options = new ArrayList<>();
-                    params.put(a.substring(1), options);
+                    arguments = new ArrayList<>();
+                    params.put(option, arguments);
                 }
-            } else if (options != null) {
-                options.add(a);
+            } else if (arguments != null) {
+                arguments.add(option.equals("p") ? arg.replace("/", "\\") : arg);
             } else {
-                params.clear();
-                throw new AnExeption("Illegal parameter usage");
+                throw new AnExeption("Illegal parameter usage" + arg);
             }
+        }
+        for (Map.Entry<String, List<String>> m : params.entrySet()) {
+            System.out.println(m.getKey() + " " + m.getValue());
         }
         checkParams(params);
         return params;
